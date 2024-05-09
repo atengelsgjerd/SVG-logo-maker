@@ -2,7 +2,8 @@
 const inquirer = require("inquirer");
 const colors = require("colors");
 const fs = require("fs");
-const generateSVG = require("./generateSVG-logo.js");
+const generateSVG = require("./lib/shapes.js");
+const Circle = require("./lib/shapes.js");
 
 
 // const writeFileAsync = util.promisify(fs.writeFile);
@@ -11,7 +12,13 @@ const questions = [
     {
         type: "input",
         message: "Please enter up to 3 characters",
-        name: "characters"
+        name: "characters",
+        validate: (answer) => {
+            if (answer.length > 3) {
+                return console.log("\n Please enter only up to 3 characters");
+            }
+            return true;
+        }
     },
     {
         type: "input",
