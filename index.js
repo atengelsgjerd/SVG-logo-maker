@@ -11,6 +11,12 @@ function colorValidation(answer) {
     }
     return "Please enter a valid color";
 }
+function hexValidation(answer) {
+    if (answer.match(/^#[0-9A-F]{6}$/i)) {
+        return true;
+    }
+    return "Please enter a valid hex color";
+}
 
 // console.log(colorKeywords.length);
 
@@ -29,19 +35,51 @@ const questions = [
         }
     },
     {
+        type: "list",
+        message: "Choose a color format for the characters",
+        name: "characterColorFormat",
+        choices: ["color name", "hex code"]
+    },
+    {
         type: "input",
         message: "Please enter a color for the characters",
         name: "characterColor",
+        when: (answer) => answer.characterColorFormat === "color name",
         validate: (answer) => {
             return colorValidation(answer);
         }
     },
     {
         type: "input",
+        message: "Please enter a hex code for the characters (e.g. #FF0000)",
+        name: "characterColor",
+        when: (answer) => answer.characterColorFormat === "hex code",
+        validate: (answer) => {
+            return hexValidation(answer);
+        }
+    },
+    {
+        type: "list",
+        message: "Choose a color format for the shape",
+        name: "shapeColorFormat",
+        choices: ["color name", "hex code"]
+    },
+    {
+        type: "input",
         message: "Please enter a color for the shape",
         name: "shapeColor",
+        when: (answer) => answer.shapeColorFormat === "color name",
         validate: (answer) => {
             return colorValidation(answer);
+        }
+    },
+    {
+        type: "input",
+        message: "Please enter a hex code for the shape (e.g. #FF0000)",
+        name: "shapeColor",
+        when: (answer) => answer.characterColorFormat === "hex code",
+        validate: (answer) => {
+            return hexValidation(answer);
         }
     },
     {
