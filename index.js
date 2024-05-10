@@ -93,7 +93,7 @@ const questions = [
 function init() {
 inquirer.prompt(questions).then(function(answers){
  fs.writeFileSync("Assets/logo.svg", generateSVG(answers), function(err){
-        console.log(err ? err : "Created logo.svg!");
+        console.log(err ? err : "Generated logo.svg");
     });
 });
 }
