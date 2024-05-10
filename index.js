@@ -46,7 +46,8 @@ const questions = [
         name: "characterColor",
         when: (answer) => answer.characterColorFormat === "color name",
         validate: (answer) => {
-            return colorValidation(answer);
+            let answerLowercase = answer.toLowerCase();
+            return colorValidation(answerLowercase);
         }
     },
     {
@@ -70,14 +71,15 @@ const questions = [
         name: "shapeColor",
         when: (answer) => answer.shapeColorFormat === "color name",
         validate: (answer) => {
-            return colorValidation(answer);
+            let answerLowercase = answer.toLowerCase();
+            return colorValidation(answerLowercase);
         }
     },
     {
         type: "input",
         message: "Please enter a hex code for the shape (e.g. #FF0000)",
         name: "shapeColor",
-        when: (answer) => answer.characterColorFormat === "hex code",
+        when: (answer) => answer.shapeColorFormat === "hex code",
         validate: (answer) => {
             return hexValidation(answer);
         }
@@ -91,11 +93,14 @@ const questions = [
     
 ];
 function init() {
-inquirer.prompt(questions).then(function(answers){
- fs.writeFileSync("Assets/logo.svg", generateSVG(answers), function(err){
-        console.log(err ? err : "Generated logo.svg");
+    inquirer.prompt(questions).then(function(answers){
+        try {
+            fs.writeFileSync("Assets/logo.svg", generateSVG(answers));
+            console.log("Generated logo.svg");
+        } catch (err) {
+            console.log(err);
+        }
     });
-});
 }
 
 init();
